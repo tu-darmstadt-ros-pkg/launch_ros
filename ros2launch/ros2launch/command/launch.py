@@ -106,6 +106,10 @@ class LaunchCommand(CommandExtension):
             '--namespace',
             help=('A namespace to push to the actions/nodes started by the launch file.')
         )
+        parser.add_argument(
+            '-r', '--remap', action='append', dest='remap_rules',
+            help=("Remapping rules, in the 'from:=to' form")
+        )
         arg = parser.add_argument(
             'package_name',
             help='Name of the ROS package which contains the launch file')
@@ -180,5 +184,6 @@ class LaunchCommand(CommandExtension):
                 args=args,
                 option_extensions=self._option_extensions,
                 debug=args.debug,
+                remap_rules=args.remap_rules,
                 namespace=args.namespace
             )
