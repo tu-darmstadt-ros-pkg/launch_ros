@@ -25,8 +25,7 @@ from ament_index_python.packages import PackageNotFoundError
 import launch
 from launch.frontend import Parser
 from launch.launch_description_sources import get_launch_description_from_any_launch_file
-from launch_ros.actions import SetRemap
-from launch_ros.actions import PushROSNamespace
+from launch_ros.actions import PushROSNamespace, SetParameter, SetRemap
 
 
 class MultipleLaunchFilesError(Exception):
@@ -149,7 +148,8 @@ def launch_a_launch_file(
     option_extensions={},
     debug=False,
     namespace=None,
-    remap_rules=None
+    remap_rules=None,
+    parameters=[]
 ):
     """Launch a given launch file (by path) and pass it the given launch file arguments."""
     for name in sorted(option_extensions.keys()):
@@ -178,6 +178,9 @@ def launch_a_launch_file(
         for remap_rule in remap_rules:
             from_name, to_name = remap_rule.split(':=', maxsplit=1)
             launch_description.add_action(SetRemap(src=from_name, dst=to_name))
+    for parameter in parameters:
+        name, value = parameter.split(':=', maxsplit=1)
+        launch_description.add_action(SetParameter(name=name, value=value))
     launch_description.add_action(
         launch.actions.IncludeLaunchDescription(
             launch.launch_description_sources.AnyLaunchDescriptionSource(

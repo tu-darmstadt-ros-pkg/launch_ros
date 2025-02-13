@@ -107,6 +107,10 @@ class LaunchCommand(CommandExtension):
             help=('A namespace to push to the actions/nodes started by the launch file.')
         )
         parser.add_argument(
+            '--parameter', action='append', dest='parameters',
+            help='Set a parameter in the launch file; "<name>:=<value>" (for duplicates, last one wins)'
+        )
+        parser.add_argument(
             '-r', '--remap', action='append', dest='remap_rules',
             help=("Remapping rules, in the 'from:=to' form")
         )
@@ -185,5 +189,6 @@ class LaunchCommand(CommandExtension):
                 option_extensions=self._option_extensions,
                 debug=args.debug,
                 remap_rules=args.remap_rules,
-                namespace=args.namespace
+                namespace=args.namespace,
+                parameters=args.parameters,
             )
