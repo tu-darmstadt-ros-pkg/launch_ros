@@ -178,9 +178,10 @@ def launch_a_launch_file(
         for remap_rule in remap_rules:
             from_name, to_name = remap_rule.split(':=', maxsplit=1)
             launch_description.add_action(SetRemap(src=from_name, dst=to_name))
-    for parameter in parameters:
-        name, value = parameter.split(':=', maxsplit=1)
-        launch_description.add_action(SetParameter(name=name, value=value))
+    if parameters is not None:
+        for parameter in parameters:
+            name, value = parameter.split(':=', maxsplit=1)
+            launch_description.add_action(SetParameter(name=name, value=value))
     launch_description.add_action(
         launch.actions.IncludeLaunchDescription(
             launch.launch_description_sources.AnyLaunchDescriptionSource(
