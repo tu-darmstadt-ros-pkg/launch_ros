@@ -19,7 +19,7 @@ from .find_package import FindPackage
 from .find_package import FindPackagePrefix
 from .find_package import FindPackageShare
 from .parameter import Parameter
-
+from .unique_substitution import UniqueSubstitution
 
 __all__ = [
     'ExecutableInPackage',
@@ -27,4 +27,5 @@ __all__ = [
     'FindPackagePrefix',
     'FindPackageShare',
     'Parameter',
+    'UniqueSubstitution',
 ]
